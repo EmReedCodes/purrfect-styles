@@ -13,13 +13,13 @@ import {
 } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCh7hqE5RLEQaokq9e-KtLKcIeneoUn6io",
-  authDomain: "purrfect-pets.firebaseapp.com",
-  projectId: "purrfect-pets",
-  storageBucket: "purrfect-pets.appspot.com",
-  messagingSenderId: "990120675552",
-  appId: "1:990120675552:web:29d7134fbf027e1349e885"
-}
+  apiKey: "AIzaSyAyoge97fPgHD59H37bC9XU67V0E85m5HE",
+  authDomain: "purrfect-styles.firebaseapp.com",
+  projectId: "purrfect-styles",
+  storageBucket: "purrfect-styles.appspot.com",
+  messagingSenderId: "245296782558",
+  appId: "1:245296782558:web:467f62f3cf96cdff58764f"
+};
 
 const firebaseApp = initializeApp(firebaseConfig)
 
@@ -31,6 +31,7 @@ provider.setCustomParameters({
 
 export const auth = getAuth()
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 export const db = getFirestore()
 
@@ -60,3 +61,6 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   return userDocRef
   
 }
+
+
+

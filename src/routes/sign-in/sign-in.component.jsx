@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import { getRedirectResult } from 'firebase/auth'
-
 import {
   auth,
   signInWithGooglePopup,
   createUserDocumentFromAuth,
-  signInWithGoogleRedirect
 } from '../../utils/firebase/firsbase.utils'
+import SignUpForm from '../../components/sign-ups/sign-up-form.component'
 
 const SignIn = () => {
 
@@ -18,16 +17,18 @@ const SignIn = () => {
   // }, [])
 
   //dont use above causes race conditions create a function inside useeffect
-  useEffect(() => {
-    async function getAuthResponse() {
-      const response = await getRedirectResult(auth)
-      console.log(response)
-    }
 
-    getAuthResponse()
-    .catch(console.error)
+  //when needed use belows
+  // useEffect(() => {
+  //   async function getAuthResponse() {
+  //     const response = await getRedirectResult(auth)
+  //     console.log(response)
+  //   }
+
+  //   getAuthResponse()
+  //   .catch(console.error)
     
-  },[])
+  // },[])
 
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup()
@@ -40,6 +41,7 @@ const SignIn = () => {
       <button onClick={logGoogleUser}>
         sign in with google
       </button>
+      <SignUpForm />
     </div>
   )
 }

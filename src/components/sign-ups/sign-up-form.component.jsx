@@ -1,5 +1,9 @@
 import { useState } from "react"
-import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firsbase.utils"
+import FormInput from "../form-input/form-input.component"
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth
+} from "../../utils/firebase/firsbase.utils"
 const defaultFormFields = {
   displayName: "",
   email: "",
@@ -9,24 +13,34 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields)
-  
+
   const { displayName, email, password, confirmPassword } = formFields
 
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields)
+  }
+
   //async since generating user doc with external service
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault()
     if (password !== confirmPassword) {
-      return alert('Passwords do not match.')
+      return alert("Passwords do not match.")
     }
     try {
-     const response = await createAuthUserWithEmailAndPassword(email, password)
-      console.log(response)
+      const { user } = await createAuthUserWithEmailAndPassword(email, password)
+      await createUserDocumentFromAuth(user, { displayName })
+      resetFormFields()
     } catch (error) {
-      console.log('user created error', error)
+      if (error.code === "auth/email-already-in-use") {
+        alert("Email already in use.")
+        return
+      } else {
+        console.log(error.code)
+      }
     }
     //confirm that pw matches
     //then see if auth went through with email and password
-    //if so create user doc 
+    //if so create user doc
   }
 
   const handleChange = event => {
@@ -37,9 +51,13 @@ const SignUpForm = () => {
   return (
     <div>
       <h1>Sign up with your email and password.</h1>
-      <form onSubmit={(event) => {handleSubmit(event)}}>
-        <label htmlFor="displayName">Display Name</label>
-        <input
+      <form
+        onSubmit={event => {
+          handleSubmit(event)
+        }}
+      >
+        <FormInput
+          label="Display Name"
           type="text"
           required
           onChange={handleChange}
@@ -47,20 +65,33 @@ const SignUpForm = () => {
           value={displayName}
         />
 
-        <label htmlFor="email">Email</label>
-        <input type="email" required onChange={handleChange} name="email" value={email} />
+        <FormInput
+          label="Email"
+          type="email"
+          required
+          onChange={handleChange}
+          name="email"
+          value={email}
+        />
 
-        <label htmlFor="password">Password</label>
-        <input type="password" required onChange={handleChange} name="password" value={password} />
+        <FormInput
+          label="Password"
+          type="password"
+          required
+          onChange={handleChange}
+          name="password"
+          value={password}
+        />
 
-        <label htmlFor="password">Confirm Password</label>
-        <input
+        <FormInput
+          label="Confirm Password"
           type="password"
           required
           onChange={handleChange}
           name="confirmPassword"
           value={confirmPassword}
         />
+
         <button type="submit">Sign Up</button>
       </form>
     </div>

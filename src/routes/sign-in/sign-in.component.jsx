@@ -1,14 +1,13 @@
-import { useEffect } from 'react'
-import { getRedirectResult } from 'firebase/auth'
+import { useEffect } from "react"
+import { getRedirectResult } from "firebase/auth"
 import {
   auth,
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
-} from '../../utils/firebase/firsbase.utils'
-import SignUpForm from '../../components/sign-ups/sign-up-form.component'
+  createUserDocumentFromAuth
+} from "../../utils/firebase/firsbase.utils"
+import SignUpForm from "../../components/sign-ups/sign-up-form.component"
 
 const SignIn = () => {
-
   // useEffect(async () => {
   //   const response = await getRedirectResult(auth)
   //   if (response) {
@@ -27,7 +26,7 @@ const SignIn = () => {
 
   //   getAuthResponse()
   //   .catch(console.error)
-    
+
   // },[])
 
   const logGoogleUser = async () => {
@@ -38,14 +37,10 @@ const SignIn = () => {
   return (
     <div>
       <h1>Sign In Page</h1>
-      <button onClick={logGoogleUser}>
-        sign in with google
-      </button>
+      <button onClick={logGoogleUser}>sign in with google</button>
       <SignUpForm />
     </div>
   )
 }
 
 export default SignIn
-
-

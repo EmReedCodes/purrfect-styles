@@ -1,11 +1,12 @@
 import './styles/sign-up-form.styles.scss'
-import { useState } from "react"
+import { useState, useContext } from "react"
 import FormInput from "../form-input/form-input.component"
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth
 } from "../../utils/firebase/firsbase.utils"
 import Button from '../button/button.component'
+import { UserContext } from '../../contexts/user.context'
 
 const defaultFormFields = {
   displayName: "",
@@ -19,7 +20,9 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields)
 
   const { displayName, email, password, confirmPassword } = formFields
-
+//components that hook into context get recalled
+  //so when context is updated we will get an updated version in val
+  const val = useContext(useContext)
   const resetFormFields = () => {
     setFormFields(defaultFormFields)
   }

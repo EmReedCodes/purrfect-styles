@@ -22,7 +22,7 @@ const SignUpForm = () => {
   const { displayName, email, password, confirmPassword } = formFields
 //components that hook into context get recalled
   //so when context is updated we will get an updated version in val
-  const val = useContext(useContext)
+  const { setCurrentUser } = useContext(UserContext)
   const resetFormFields = () => {
     setFormFields(defaultFormFields)
   }
@@ -35,6 +35,7 @@ const SignUpForm = () => {
     }
     try {
       const { user } = await createAuthUserWithEmailAndPassword(email, password)
+      setCurrentUser(user)
       await createUserDocumentFromAuth(user, { displayName })
       resetFormFields()
     } catch (error) {

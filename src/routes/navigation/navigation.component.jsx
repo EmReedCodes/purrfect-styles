@@ -4,9 +4,16 @@ import { useContext } from "react"
 import { UserContext } from "../../contexts/user.context"
 import './styles/navigation.styles.css'
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
+import { signOutUser } from '../../utils/firebase'
 const Navigation = () => {
-    const { currentUser } = useContext(UserContext)
-    console.log(currentUser)
+    const { currentUser, setCurrentUser } = useContext(UserContext)
+    //we want to await what signOutUser does
+    const signOutHandler = async () => {
+        //we want to wait on signOutUser
+        await signOutUser()
+        setCurrentUser(null)
+
+    }
     return (
         <Fragment>
             <div className="navigation">
@@ -17,9 +24,16 @@ const Navigation = () => {
                     <Link className="nav-link" to='/shop'>
                     SHOP
                     </Link>
-                    <Link className="nav-link" to='/auth'>
-                    SIGNIN
-                    </Link>
+                    {
+                        currentUser ? (
+                            <span className="nav-link" onClick={signOutHandler}>SIGN OUT</span>
+                        ):(
+                            <Link className="nav-link" to='/auth'>
+                            SIGN IN
+                            </Link>
+                        )
+                    }
+                   
                 </div>
             </div>
             <Outlet />

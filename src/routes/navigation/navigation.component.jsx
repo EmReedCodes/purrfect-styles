@@ -4,7 +4,7 @@ import { useContext } from "react"
 import { UserContext } from "../../contexts/user.context"
 import './styles/navigation.styles.css'
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
-import { signOutUser } from '../../utils/firebase'
+import { signOutUser } from "../../utils/firebase/firsbase.utils"
 const Navigation = () => {
     const { currentUser, setCurrentUser } = useContext(UserContext)
     //we want to await what signOutUser does

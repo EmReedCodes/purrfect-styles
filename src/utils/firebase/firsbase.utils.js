@@ -6,7 +6,9 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-    signOut
+  signOut,
+  //hook into a stream of events that way we can trigger based on specific changes
+  onAuthStateChanged,
 } from 'firebase/auth'
 import {
   getFirestore,
@@ -79,3 +81,9 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 }
 
 export const signOutUser = async () => await signOut(auth);
+
+//it takes 2 parameters auth, callback you want to call every time state auth changes
+//this one will always be listening and you have to tell it when to stop or it can become a memory leak whenever component unmounts (in user)
+export const onAuthStateChangedListender = (callback) => {
+  onAuthStateChanged(auth, callback)
+}

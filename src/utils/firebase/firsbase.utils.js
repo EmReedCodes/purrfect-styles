@@ -84,6 +84,6 @@ export const signOutUser = async () => await signOut(auth);
 
 //it takes 2 parameters auth, callback you want to call every time state auth changes
 //this one will always be listening and you have to tell it when to stop or it can become a memory leak whenever component unmounts (in user)
-export const onAuthStateChangedListender = (callback) => {
+export const onAuthStateChangedListener = (callback) => {
   onAuthStateChanged(auth, callback)
 }
